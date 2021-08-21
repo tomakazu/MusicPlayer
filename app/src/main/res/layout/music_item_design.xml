@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     android:orientation="vertical"
+    android:background="@drawable/background_box"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
-        android:background="@color/black"
-        android:textColor="#FF0000"
+        android:textColor="#320d3e"
         android:id="@+id/song_name"
         android:padding="8dp"
         android:gravity="center"

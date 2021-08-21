@@ -10,17 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.music_app.MainViewModelData;
 import com.example.music_app.MusicAdapter;
 import com.example.music_app.R;
+import com.example.music_app.Song;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SongList#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SongList extends Fragment {
+public class SongList extends Fragment implements MusicAdapter.OnItemClickListener {
 
     RecyclerView recyclerView;
     MainViewModelData mainViewModelData;
@@ -38,10 +35,14 @@ public class SongList extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mainViewModelData = new ViewModelProvider(getActivity()).get(MainViewModelData.class);
-
-        recyclerView.setAdapter(new MusicAdapter(mainViewModelData.getSongs()));
+        recyclerView.setAdapter(new MusicAdapter(mainViewModelData.getSongs(),SongList.this::onItemClick));
 
 
         return view;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,new MusicPlay(mainViewModelData.getSongs().get(position))).commit();
     }
 }

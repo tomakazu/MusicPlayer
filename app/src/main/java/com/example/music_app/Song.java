@@ -9,4 +9,16 @@ public class Song {
         this.author = author;
         this.song_Url = song_Url;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getSong_Url() {
+        return song_Url;
+    }
 }
