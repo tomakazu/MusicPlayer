@@ -37,12 +37,12 @@ public class SongList extends Fragment implements MusicAdapter.OnItemClickListen
         mainViewModelData = new ViewModelProvider(getActivity()).get(MainViewModelData.class);
         recyclerView.setAdapter(new MusicAdapter(mainViewModelData.getSongs(),SongList.this::onItemClick));
 
-
         return view;
     }
 
     @Override
     public void onItemClick(int position) {
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,new MusicPlay(mainViewModelData.getSongs().get(position))).commit();
+        mainViewModelData.setSong_index(position);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,new MusicPlay()).addToBackStack(null).commit();
     }
 }

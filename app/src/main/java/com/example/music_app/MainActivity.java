@@ -39,15 +39,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(savedInstanceState==null){
+            mainViewModelData = new ViewModelProvider(this).get(MainViewModelData.class);
 
-        mainViewModelData = new ViewModelProvider(this).get(MainViewModelData.class);
-
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},111);
-        }else {
-            loadSongs();
+            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},111);
+            }else {
+                loadSongs();
+            }
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,new SongList()).commit();
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,new SongList()).commit();
+
 
     }
 
@@ -62,14 +64,15 @@ public class MainActivity extends AppCompatActivity {
     private void loadSongs() {
 
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        String select = MediaStore.Audio.Media.IS_MUSIC + "!=0";
+        String select = MediaStore.Audio.Media.IS_MUSIC + "!=0 AND "+MediaStore.Audio.Media.DISPLAY_NAME+" LIKE '%.mp3'";
         Cursor cursor = getApplicationContext().getContentResolver().query(uri, null, select, null, null);
+
         if(cursor!=null){
+            mainViewModelData.getSongs().clear();
             while (cursor.moveToNext()){
                 String url = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
                 String author = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
                 String title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
-                mainViewModelData.getSongs().add(new Song(title,author,url));
             }
         }
     }

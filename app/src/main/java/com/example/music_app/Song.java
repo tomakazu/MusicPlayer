@@ -4,6 +4,9 @@ public class Song {
 
     String title,author,song_Url;
 
+    public Song() {
+    }
+
     public Song(String title, String author, String song_Url) {
         this.title = title;
         this.author = author;

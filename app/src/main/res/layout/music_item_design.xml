@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:textColor="#320d3e"
+        android:textColor="@color/black"
         android:id="@+id/song_name"
         android:padding="8dp"
         android:gravity="center"
