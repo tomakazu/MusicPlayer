@@ -66,13 +66,13 @@ public class MainActivity extends AppCompatActivity {
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String select = MediaStore.Audio.Media.IS_MUSIC + "!=0 AND "+MediaStore.Audio.Media.DISPLAY_NAME+" LIKE '%.mp3'";
         Cursor cursor = getApplicationContext().getContentResolver().query(uri, null, select, null, null);
-
         if(cursor!=null){
             mainViewModelData.getSongs().clear();
             while (cursor.moveToNext()){
                 String url = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
                 String author = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
                 String title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
+                mainViewModelData.getSongs().add(new Song(title,author,url));
             }
         }
     }
