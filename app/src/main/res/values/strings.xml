@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">music_app</string>
+    <string name="app_name">Sangeet</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="songs_list">SONGS LIST</string>

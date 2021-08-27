@@ -26,6 +26,13 @@ public class SongList extends Fragment implements MusicAdapter.OnItemClickListen
         // Required empty public constructor
     }
 
+    private void checkPlay(){
+        if(mainViewModelData.getMediaPlayer()!=null){
+            mainViewModelData.getMediaPlayer().release();
+            mainViewModelData.setPaused(false);
+            mainViewModelData.setMediaPlayer(null);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,13 +43,13 @@ public class SongList extends Fragment implements MusicAdapter.OnItemClickListen
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mainViewModelData = new ViewModelProvider(getActivity()).get(MainViewModelData.class);
         recyclerView.setAdapter(new MusicAdapter(mainViewModelData.getSongs(),SongList.this::onItemClick));
-
         return view;
     }
 
     @Override
     public void onItemClick(int position) {
         mainViewModelData.setSong_index(position);
+        checkPlay();
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,new MusicPlay()).addToBackStack(null).commit();
     }
 }
