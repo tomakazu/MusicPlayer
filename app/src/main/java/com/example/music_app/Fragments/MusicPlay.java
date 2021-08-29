@@ -1,8 +1,11 @@
 package com.example.music_app.Fragments;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -78,20 +81,16 @@ public class MusicPlay extends Fragment {
         stop = view.findViewById(R.id.stop_button);
         pause_play = view.findViewById(R.id.play_pause_button);
         mainViewModelData = new ViewModelProvider(getActivity()).get(MainViewModelData.class);
-
-    //    checkPlay();
-        startMusic();
-
-
         edit_name = view.findViewById(R.id.edit_name);
-
-        Toast.makeText(getContext(),mainViewModelData.getPaused().toString(),Toast.LENGTH_SHORT).show();
+        
+        startMusic();
 
         edit_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showDialog();
             }
+
         });
 
 
@@ -121,5 +120,13 @@ public class MusicPlay extends Fragment {
 
 
         return view;
+    }
+
+    private void showDialog() {
+          
+          Dialog dialog = new Dialog(getActivity());
+          dialog.setContentView(R.layout.change_name_dialog);
+          dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+          dialog.show();
     }
 }
